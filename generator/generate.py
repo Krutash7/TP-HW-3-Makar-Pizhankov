@@ -6,15 +6,17 @@ import sys
 NUM_ROWS = 50
 
 
-COLUMNS = ["COLUMN_1", "COLUMN_2", "COLUMN_3", "COLUMN_4"]
+COLUMNS = ["Имя_Героя", "Класс", "Уровень", "Золото_в_кошельке"]
 
 def generate_row():
+    names = ["Арагорн", "Гэндальф", "Леголас", "Гимли", "Боромир", "Фродо", "Сэм", "Джайна", "Тралл", "Иллидан"]
+    classes = ["Воин", "Маг", "Лучник", "Жрец", "Разбойник", "Паладин"]
 
     return {
-        "COLUMN_1": random.randint(0, 100),
-        "COLUMN_2": round(random.uniform(1.5, 9.9), 2),
-        "COLUMN_3": random.randint(0, 100),
-        "COLUMN_4": random.choice(["A", "B", "C"]),
+        "Имя_Героя": random.choice(names),
+        "Класс": random.choice(classes),
+        "Уровень": random.randint(1, 80),
+        "Золото_в_кошельке": round(random.uniform(10.5, 9999.9), 2),
     }
 
 OUTPUT_DIR = sys.argv[1] if len(sys.argv) > 1 else "/data"
