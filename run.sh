@@ -27,12 +27,33 @@ create_local_data() {
     echo "Файл успешно сгенерирован в local_data/data.csv"
 }
 
+build_reporter() {
+    echo "=== Сборка Docker-образа для аналитика ==="
+    docker build -t data_reporter_image "$PROJECT_DIR/reporter"
+}
+
+run_reporter() {
+    echo "=== Запуск аналитика ==="
+
+    if [ ! -f "$PROJECT_DIR/data/data.csv" ]; then
+        echo "Ошибка: Файл $PROJECT_DIR/data/data.csv не найден"
+        echo "Сначала сгенерируйте данные с помощью ./run.sh run_generator"
+        exit 1
+    fi
+
+    docker run --rm -v "$PROJECT_DIR/data:/data" data_reporter_image
+    
+    echo "Отчет сгенерирован в data/report.html"
+}
+
 case "$1" in
     build_generator)   build_generator ;;
     run_generator)     run_generator ;;
     create_local_data) create_local_data ;;
+    build_reporter)    build_reporter ;;
+    run_reporter)      run_reporter ;;
     *)
-        echo "Использование: $0 {build_generator|run_generator|create_local_data}"
+        echo "Использование: $0 {build_generator|run_generator|create_local_data|build_reporter|run_reporter}"
         exit 1
         ;;
 esac
